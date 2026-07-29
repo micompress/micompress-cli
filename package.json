@@ -1,0 +1,36 @@
+{
+  "name": "micompress-cli",
+  "version": "0.1.1",
+  "description": "Compress images, PDFs, video, audio, documents & archives from the command line — powered by micompress.com",
+  "keywords": [
+    "compress", "compression", "image", "png", "jpeg", "webp", "pdf",
+    "video", "audio", "minify", "optimize", "cli", "micompress"
+  ],
+  "homepage": "https://micompress.com",
+  "bugs": {
+    "url": "https://micompress.com/contact"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/micompress/micompress-cli.git"
+  },
+  "license": "MIT",
+  "author": "MiCompress (https://micompress.com)",
+  "type": "commonjs",
+  "bin": {
+    "micompress": "bin/micompress.js"
+  },
+  "files": [
+    "bin/",
+    "src/",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node test/smoke.js"
+  },
+  "dependencies": {}
+}
