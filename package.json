@@ -1,6 +1,6 @@
 {
   "name": "micompress-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Compress images, PDFs, video, audio, documents & archives from the command line — powered by micompress.com",
   "keywords": [
     "compress", "compression", "image", "png", "jpeg", "webp", "pdf",

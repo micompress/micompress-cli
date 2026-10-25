@@ -28,10 +28,36 @@ micompress big.jpg --max-width 1920 --json
 | `-o, --output <dir>` | Write results to a directory (default: alongside input, `-min` suffix) |
 | `-p, --preset <name>` | `lossless` · `recommended` (default) · `extreme` |
 | `--max-width <px>` | Resize images down to a maximum width |
-| `--token <jwt>` | Auth token for higher size limits ([log in](https://micompress.com/account)) |
+| `--api-key <key>` | Personal API key from [micompress.com/account](https://micompress.com/account) (or env `MICOMPRESS_API_KEY`) |
+| `--token <jwt>` | Legacy login token — prefer `--api-key` |
 | `--api <url>` | Override API base URL |
 | `--json` | Machine-readable output |
 | `-q, --quiet` | Only print errors |
+
+## API key
+
+Anonymous use works without a key, within small per-type size limits. For bigger files,
+use your personal API key:
+
+1. Sign in (free) at **https://micompress.com/account** and copy your key (`mc_…`).
+2. Pass it with `--api-key`, or set it once in the environment (the flag wins):
+
+```bash
+micompress big-video.mp4 --api-key mc_yourkey
+export MICOMPRESS_API_KEY=mc_yourkey
+micompress big-video.mp4
+```
+
+With a key, files up to **100 MB** are accepted (anonymous limits are 20–50 MB depending on type).
+
+| Plan | API compressions / month |
+|------|--------------------------|
+| Free account | 50 |
+| Plus ($9.99/mo) | 1,000 (shared with website usage) |
+| Pro ($19.99/mo) | 5,000 (shared with website usage) |
+
+When the monthly allowance is used up the CLI reports `API_QUOTA_REACHED` (free) or
+`USAGE_LIMIT_REACHED` (paid). Compare plans at **https://micompress.com/plans**.
 
 ## Supported formats
 
@@ -50,7 +76,7 @@ Full tool list: **https://micompress.com/all-tools**
 Your file is uploaded over HTTPS to [micompress.com](https://micompress.com), compressed with
 the same engine the website uses (mozjpeg, pngquant, gifski, Ghostscript, ffmpeg, …), and the
 optimized file is streamed back. Anonymous use is supported within per-type size limits;
-pass `--token` for larger files.
+pass `--api-key` for larger files.
 
 ## Requirements
 

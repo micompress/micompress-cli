@@ -18,7 +18,9 @@ Options
                          (default: alongside input, "-min" suffix)
   -p, --preset <name>    lossless | recommended (default) | extreme
       --max-width <px>   Resize images down to this max width
-      --token <jwt>      Auth token for higher size limits (login on micompress.com)
+      --api-key <key>    Personal API key from micompress.com/account
+                         (or set MICOMPRESS_API_KEY; the flag wins)
+      --token <jwt>      Legacy login token (prefer --api-key)
       --api <url>        API base URL (default: ${DEFAULT_BASE})
       --suffix <str>     Filename suffix for default output (default: "-min")
       --json             Machine-readable JSON output
@@ -31,12 +33,13 @@ Examples
   micompress *.png --preset extreme
   micompress report.pdf slides.pptx -o out/
   micompress big.jpg --max-width 1920 --json
+  MICOMPRESS_API_KEY=mc_yourkey micompress video.mp4
 
 Powered by micompress.com — need more formats or bigger files? ${DEFAULT_BASE}/?${UTM}
 `;
 
 function parseArgs(argv) {
-  const o = { files: [], preset: null, maxWidth: null, token: null,
+  const o = { files: [], preset: null, maxWidth: null, token: null, apiKey: null,
     baseUrl: DEFAULT_BASE, output: null, suffix: '-min', json: false, quiet: false };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -48,6 +51,7 @@ function parseArgs(argv) {
       case '-o': case '--output': o.output = argv[++i]; break;
       case '-p': case '--preset': o.preset = argv[++i]; break;
       case '--max-width': o.maxWidth = parseInt(argv[++i], 10); break;
+      case '--api-key': o.apiKey = argv[++i]; break;
       case '--token': o.token = argv[++i]; break;
       case '--api': o.baseUrl = argv[++i]; break;
       case '--suffix': o.suffix = argv[++i]; break;
@@ -56,6 +60,7 @@ function parseArgs(argv) {
         else o.files.push(a);
     }
   }
+  if (!o.apiKey) o.apiKey = process.env.MICOMPRESS_API_KEY || null;
   return o;
 }
 
